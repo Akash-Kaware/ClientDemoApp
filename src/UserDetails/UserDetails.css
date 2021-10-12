@@ -1,0 +1,12 @@
+form .table-responsive .table{
+    border-top: none;
+}
+form .table-responsive .table tr td label{
+    float: right;
+}
+
+.div-header{
+    font-weight: bold;
+    margin-top: 20px !important;
+    font-size: 35px;
+}

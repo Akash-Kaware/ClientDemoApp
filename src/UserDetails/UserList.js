@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { getUsers, deleteUsers } from '../Services/userDetails.service';
+import { getUsers, deleteUsers, downloadFile } from '../Services/userDetails.service';
 
 const UsersList = ({ handleCreateClick }) => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
-        getUsers().then(resp => {            
+        getUsers().then(resp => {
             setUsers(resp);
         })
     }, []);
@@ -36,6 +36,9 @@ const UsersList = ({ handleCreateClick }) => {
             <td>{obj.passportNo}</td>
             <td>{obj.passportExpirtDate}</td>
             <td>{obj.locationId}</td>
+            <td>{obj.passportFilePath != null ? <button onClick={() => {downloadFile(obj.passportFilePath)}}>Passport</button> : ''}
+                {obj.personPhoto != null ? <button onClick={() => {downloadFile(obj.personPhoto)}}> Photo</button> : ''}
+            </td>
             <td><button onClick={() => handleEdit(obj.id)}>Edit</button> &nbsp;&nbsp;
                 <button onClick={() => { handleDelete(obj.id) }}>Delete</button></td>
         </tr>
@@ -60,6 +63,7 @@ const UsersList = ({ handleCreateClick }) => {
                                 <th>Passport No.</th>
                                 <th>Passport Expirt Date</th>
                                 <th>Location</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>

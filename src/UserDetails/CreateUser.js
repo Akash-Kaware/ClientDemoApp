@@ -8,7 +8,6 @@ import "react-datepicker/dist/react-datepicker.css";
 const CreateUser = ({ handleBackToList, userId }) => {
 
     const [inputs, setInputs] = useState({});
-    const [passport, setPassport] = useState({});
 
     useEffect(() => {
         if (userId) {
@@ -27,7 +26,6 @@ const CreateUser = ({ handleBackToList, userId }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(passport);
         inputs.mobileNo = parseInt(inputs.mobileNo);
         inputs.locationId = parseInt(inputs.locationId);
         inputs.passportExpirtDate = new Date(inputs.passportExpirtDate).toISOString();
@@ -44,24 +42,6 @@ const CreateUser = ({ handleBackToList, userId }) => {
             alert(error);
         });
     }
-
-    const handleImageChange = (e) => {
-        e.preventDefault();
-        // let form = new FormData();
-        // for (var index = 0; index < e.target.files.length; index++) {
-        //     var element = e.target.files[index];
-        //     form.append('image', element);
-        //     form.append('fileName', e.target.files[index].name);
-        //     // setInputs({ "passport": e.target.files[index] }));
-        // }
-        // setInputs(values => ({ ...values, passport: form }));
-        // form.append('fileName', "Img");
-        // this.setState({ file: form });
-        // setPassport({ file: form });
-        setInputs(values => ({ ...values, passport: e.target.files[0] }));
-    };
-
-
 
     const ddlLocations = enumLocations.map((loc) => {
         return <option value={loc.value}>{loc.label}</option>
@@ -82,7 +62,7 @@ const CreateUser = ({ handleBackToList, userId }) => {
                             </tr>
                             <tr key="2">
                                 <td><label>Mobile No. : </label></td>
-                                <td><input type="number" maxLength="10" required className="form-control" id="mobileNo" name="mobileNo" value={inputs.mobileNo || ""} onChange={handleChange} /></td>
+                                <td><input type="text" maxLength={10} required className="form-control" id="mobileNo" name="mobileNo" value={inputs.mobileNo || ""} onChange={handleChange} /></td>
                                 <td> <label>Email :</label></td>
                                 <td> <input type="email" required className="form-control" id="email" name="email" value={inputs.email || ""} onChange={handleChange} /></td>
 
@@ -106,7 +86,7 @@ const CreateUser = ({ handleBackToList, userId }) => {
                             <tr key="5">
                                 <td><label>Passport :</label> </td>
                                 <td>
-                                    <input type="file" name="passportFilePath" onChange={handleImageChange} />
+                                    <input type="file" name="passportFilePath" onChange={(e) => setInputs(values => ({ ...values, passport: e.target.files[0] }))} />
                                 </td>
                                 <td><label>Location : </label></td>
                                 <td>
@@ -117,7 +97,7 @@ const CreateUser = ({ handleBackToList, userId }) => {
                                 </td>
                             </tr>
                             <tr key="6">
-                                <td><label>Passport :</label> </td>
+                                <td><label>Photo :</label> </td>
                                 <td>
                                     <input type="file" name="personPhoto" onChange={(e) => setInputs(values => ({ ...values, photo: e.target.files[0] }))} />
                                 </td>

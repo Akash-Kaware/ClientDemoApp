@@ -1,7 +1,7 @@
 import { baseURL } from './authentication.service';
 import { authHeader } from '../helpers/auth-header';
 import { handleResponse } from '../helpers/handle-response';
-import { post } from 'axios';
+import axios, { post } from 'axios';
 
 export const createUser = (user) => {
     const formData = new FormData();
@@ -50,3 +50,18 @@ export const deleteUsers = (id) => {
         });
 }
 
+export const downloadFile = (filename) => {
+    axios({
+        url: `${baseURL}/User/Download?filename=${filename}`,
+        method: 'POST',       
+        responseType: 'blob', 
+        headers: authHeader(),
+    }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+    });
+}

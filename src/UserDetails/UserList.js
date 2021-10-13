@@ -4,14 +4,14 @@ import { getUsers, deleteUsers } from '../Services/userDetails.service';
 const UsersList = ({ handleCreateClick }) => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
-        getUsers().then(resp => {
+        getUsers().then(resp => {            
             setUsers(resp);
         })
     }, []);
 
     const handleDelete = (id) => {
         deleteUsers(id).then(res => {
-            if (res.data == 1) {                
+            if (res.data === 1) {
                 getUsers().then(resp => {
                     setUsers(resp);
                     alert(`User deleted Successfully!!!`);
@@ -21,11 +21,12 @@ const UsersList = ({ handleCreateClick }) => {
     }
 
     const handleEdit = (id) => {
-        alert(`Edit API call where ID = ${id}`);
+        handleCreateClick(true, id);
     }
 
-    const listContent = users.map(obj => {
-        return (<tr>
+    const listContent = users.map((obj, index) => {
+        return (<tr key={index + 1}>
+            <td>{index + 1}</td>
             <td>{obj.employeeType}</td>
             <td>{obj.name}</td>
             <td>{obj.mobileNo}</td>
@@ -49,6 +50,7 @@ const UsersList = ({ handleCreateClick }) => {
                     <table className="table">
                         <thead>
                             <tr>
+                                <th>Sr.No.</th>
                                 <th>Employee Type </th>
                                 <th>Name</th>
                                 <th>Mobile No.</th>

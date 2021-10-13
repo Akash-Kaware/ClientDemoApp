@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createUser } from "../Services/userDetails.service";
 
 
 const CreateUser = ({ handleBackToList }) => {
@@ -11,7 +12,17 @@ const CreateUser = ({ handleBackToList }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(inputs);
+        inputs.MobileNo = parseInt(inputs.MobileNo);
+        inputs.LocationId = parseInt(inputs.Location);
+        inputs.PassportExpirtDate = new Date(inputs.PassportExpirtDate);
+        createUser(inputs).then(res => {
+            if (res.data == 0) {
+                alert('User created successfully.');
+                handleBackToList(false);
+            }
+        }, error => {
+            alert(error);
+        });
     };
 
     return (

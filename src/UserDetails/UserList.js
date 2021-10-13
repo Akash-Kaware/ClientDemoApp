@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUsers } from '../Services/userDetails.service';
+import { getUsers, deleteUsers } from '../Services/userDetails.service';
 
 const UsersList = ({ handleCreateClick }) => {
     const [users, setUsers] = useState([]);
@@ -10,7 +10,14 @@ const UsersList = ({ handleCreateClick }) => {
     }, []);
 
     const handleDelete = (id) => {
-        alert(`delete API call where ID = ${id} `);
+        deleteUsers(id).then(res => {
+            if (res.data == 1) {                
+                getUsers().then(resp => {
+                    setUsers(resp);
+                    alert(`User deleted Successfully!!!`);
+                })
+            }
+        });
     }
 
     const handleEdit = (id) => {

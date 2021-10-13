@@ -5,12 +5,12 @@ import { handleResponse } from '../helpers/handle-response';
 export const createUser = (user) => {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeader() },
         body: JSON.stringify(user)
     };
 
     return fetch(`${baseURL}/User/Create`, requestOptions)
-
+        .then(handleResponse)
         .then(response => {
             return response
         });
@@ -20,6 +20,15 @@ export const getUsers = () => {
     const requestOptions = { method: 'GET', headers: authHeader() };
 
     return fetch(`${baseURL}/User/Get`, requestOptions)
+        .then(handleResponse)
+        .then(response => {
+            return response
+        });
+}
+
+export const deleteUsers = (id) => {
+    const requestOptions = { method: 'DELETE', headers: authHeader() };
+    return fetch(`${baseURL}/User/Delete?id=${id}`, requestOptions)
         .then(handleResponse)
         .then(response => {
             return response
